@@ -11,13 +11,22 @@ const ShowBlogs = ()=>{
     }, [])
     
     const getBlogs= async()=>{
-        const res = await axios.get(URI)
-        setBlogs(res.data)
+        try {
+            const res = await axios.get(URI)
+            setBlogs(res.data)
+        } catch (error) {
+            setBlogs("error")
+        }
     }
 
     const deleteBlog = async ()=>{
         axios.delete(`${URI}${id}`)
         getBlogs()
+    }
+    if(blogs=="error"){
+        return(
+            <h1>ERROR SERVER CONECTION</h1>
+        )
     }
     return(
         <table>
